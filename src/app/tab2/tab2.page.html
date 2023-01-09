@@ -16,6 +16,17 @@
       <ion-label>Description</ion-label>
       <ion-textarea formControlName="description"></ion-textarea>
     </ion-item>
+    <ion-item>
+      <ion-label>Foto</ion-label>
+      <ion-label>
+        <ion-button style="height: 70px; width: 70px;" (click)="hazfoto();">
+          <ion-img src="../../assets/icon/photo-camera-1_icon-icons.com_63898.svg" alt="camara de fotos"></ion-img>
+        </ion-button>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-img #foto src=""></ion-img>
+    </ion-item>
     <ion-button shape="round" color="primary" fill="outline" type="submit" [disabled]="!todo.valid">Submit</ion-button>
   </form>
 </ion-content>
