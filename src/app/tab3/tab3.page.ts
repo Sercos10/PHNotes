@@ -15,7 +15,7 @@ export class Tab3Page {
 
   public async hazfoto(){
       const image = await Camera.getPhoto({
-      quality: 90,
+      quality: 60,
       allowEditing: true,
       resultType: CameraResultType.Base64,
       
@@ -26,13 +26,17 @@ export class Tab3Page {
     // passed to the Filesystem API to read the raw data of the image,
     // if desired (or pass resultType: CameraResultType.Base64 to getPhoto)
     let imageUrl = image.base64String;
-    console.log(image);
-    console.log(imageUrl);
 
     var signatures = {
-      iVBORw0KGgo: "image/png"
+      iVBORw0KGgo: "image/png",
+    "/9j/": "image/jpg"
     };
-    imageUrl="data:"+signatures.iVBORw0KGgo+";base64,"+imageUrl;
+    if (imageUrl.charAt(0)=="/") {
+      imageUrl="data:"+signatures['/9j/']+";base64,"+imageUrl;
+    }else{
+      imageUrl="data:"+signatures.iVBORw0KGgo+";base64,"+imageUrl;
+    }
+    
     // Can be set to the src of an image now
     // blob:
     //MIME

@@ -46,9 +46,6 @@ export class Tab1Page implements OnInit {
         }
       })
     }
-    console.log(data);
-    
-
   }
   public async loadNotes(event){
     this.notes = await this.noteS.getNotes(true);

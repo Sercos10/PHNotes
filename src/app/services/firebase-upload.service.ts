@@ -24,26 +24,8 @@ export class FirebaseUploadService {
   public async addFoto(foto:Foto): Promise<Foto> {
     let newFoto = await this.dbRef.add(foto);
     return foto;
-}
-
-
-
-
-  async storeImage(imageData:any) {
-    try {
-      const imageName = this.imageName();
-      
-      
-
-    }catch (error) {
-      
-    }
   }
 }
-
-
-
-
 /*return new Promise((resolve, reject) => {
         
         const pictureRef = this.storage.ref(this.location + imageName);

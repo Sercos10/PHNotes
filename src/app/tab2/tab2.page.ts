@@ -28,8 +28,8 @@ export class Tab2Page {
 
   public async hazfoto(){
     const image = await Camera.getPhoto({
-    quality: 90,
-    allowEditing: true,
+    quality: 60,
+    allowEditing: false,
     resultType: CameraResultType.Base64,
     
   })
@@ -39,13 +39,18 @@ export class Tab2Page {
   // passed to the Filesystem API to read the raw data of the image,
   // if desired (or pass resultType: CameraResultType.Base64 to getPhoto)
   let imageUrl = image.base64String;
-  console.log(image);
-  console.log(imageUrl);
 
   var signatures = {
-    iVBORw0KGgo: "image/png"
+    iVBORw0KGgo: "image/png",
+  "/9j/": "image/jpg"
   };
-  imageUrl="data:"+signatures.iVBORw0KGgo+";base64,"+imageUrl;
+
+  if (imageUrl.charAt(0)=="/") {
+    imageUrl="data:"+signatures['/9j/']+";base64,"+imageUrl;
+  }else{
+    imageUrl="data:"+signatures.iVBORw0KGgo+";base64,"+imageUrl;
+  }
+
   // Can be set to the src of an image now
   // blob:
   //MIME
@@ -58,21 +63,30 @@ export class Tab2Page {
     if(!this.todo.valid) return;
     await this.uiS.showLoading();
     try{
-      await this.noteS.addNote({
+      if (this.foto.src!=null && this.foto.src!="") {
+        await this.noteS.addNote({
+        
         title:this.todo.get('title').value,
         description:this.todo.get('description').value,
         photo:this.foto.src
-      });
-      this.todo.reset("");
-      this.uiS.showToast("¡Nota insertada correctamente!");
+        });
+        this.todo.reset("");
+        this.uiS.showToast("¡Nota insertada correctamente!");
+      }else{
+        await this.noteS.addNote({
+        
+          title:this.todo.get('title').value,
+          description:this.todo.get('description').value,
+          });
+          this.todo.reset("");
+          this.uiS.showToast("¡Nota insertada correctamente!");
+      }
     }catch(err){
       console.error(err);
       this.uiS.showToast(" Algo ha ido mal ;( ","danger");
     } finally{
       this.uiS.hideLoading();
     }
-    
-    
   }
 
 }
